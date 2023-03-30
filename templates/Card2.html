@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title></title>
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/Card.css')}}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/font-awesome.min.css')}}">
+
+<script src="{{url_for('static', filename='script/sweatallert.js')}}"></script>
+
+<style type="text/css" media="all">
+  .swal2-popup {
+  width: 800px;
+  
+}
+
+</style>
+
+</head>
+
+<body>
+ 
+<div id="bodyblur"><img src="{{url_for('static', filename='source/IMG-20211201-090448-830.jpg')}}" width="100%" height="100%"/></div>
+
+<script type="text/javascript" charset="utf-8">
+
+  Swal.fire({
+   // text:`Thank {{name}} udah mau ngebuang buang waktunya😅,jika kamu ingin membuat QnA Mu klik tombol create`,
+  imageUrl: `{{url_for('static', filename='source/thanks-thank-you.gif')}}`,
+ html:`<p>Thank {{name}} udah mau ngebuang buang waktunya😅</p><p>jika kamu ingin membuat QnA Mu klik tombol create</p>`,
+  showDenyButton: true,
+  showCancelButton: false,
+  confirmButtonText: 'Create',
+  denyButtonText: `end`,
+}).then((result) => {
+
+  if (result.isConfirmed) {
+    window.location.href = "http://localhost:5003/";
+
+  } else if (result.isDenied) {
+    Swal.fire('Thanks For Your Time,And Have Fun For Your To Day😉')
+  }
+})
+
+</script>
+ <script src="{{url_for('static', filename='assets/vendors/jquery/jquery-3.4.1.js')}}"></script>
+ <script src="{{url_for('static', filename='assests/vendors/bootstrap/bootstrap.bundle.js')}}"></script>
+ <script src="{{url_for('static', filename='script/slide.js')}}" type="text/javascript" charset="utf-8"></script>
+  </body>
+</html>

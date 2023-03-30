@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title></title>
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/ionicons.min.css')}}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/bootsButton.css')}}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/Card.css')}}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/font-awesome.min.css')}}">
+
+<script src="{{url_for('static', filename='script/sweatallert.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='css/dark.css')}}">
+
+
+</head>
+
+<body>
+ <p id="username" name="username" style="display:none;"> {{name}}</p>
+ <div id="bodyblur"><img src="{{url_for('static', filename='source/IMG-20211201-090448-830.jpg')}}" width="100%" height="100%"/></div>
+
+<div id="konten">
+<div class="container">
+ <section id="testmonial" class="section" style="text-align :center; ">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  
+<div class="carousel-inner">
+  
+<div class="carousel-item active">
+<div class="card testmonial-card border" >
+<div class="card-body">
+<img src="{{url_for('static', filename='source/iklog.gif')}}" alt="" style="margin-top: -5px;margin-bottom:-8px;margin-left:30px;">
+
+<p class="text" id="sapa"></p>
+
+</div>
+<div id="hide" style="display:none;">
+<a><button type="button" class="btn mr-md-2 mb-md-0 mb-2 btn-outline-light btn-round next" id="btn5" onclick="plusSlides(1)" style="size:10px; margin-top:10px;">lanjutin &#10095;
+</button>
+</a>
+</div>
+</div>
+</div>
+
+<div class="carousel-item active">
+<div class="card testmonial-card border">
+<div class="card-body">
+<img src="{{url_for('static', filename='source/yyy.gif')}}" alt="" style="width: 150px;
+  height: 150px; margin-top: -30px; margin-left:-10px;margin-bottom:-8px;">
+<p class="text" id="teks"></p>
+<div class="input-group" style="display:none;" id="hide3">
+<form class="formc" action="/pros" method="POST" accept-charset="utf-8" >
+    <div class="form-input-material">
+
+<textarea type="text" name="forum" id="coment"  autocomplete="off" class="text-area" required  ></textarea>
+
+ <input type="text" name="name" id="name" value="" style="display:none;"/>
+</div>
+
+<a>
+<input class="btn mr-md-2 mb-md-0 mb-2 btn-outline-light btn-round next" type="submit" id="btn3" value="kirim &#10095;"  />
+</a>
+
+</form>
+</div>
+<!--     <h1 class="title">nama lu</h1>
+<h1 class="subtitle">..PUSING ANYIIIIIINK EROR MULU SERVER NYAA NGETOTTTT.</m>-->
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+</section>
+
+</div>
+</div>
+ <script src="{{url_for('static', filename='script/name.js')}}"></script>
+<script src="{{url_for('static', filename='script/typed.umd.js')}}" type="text/javascript" charset="utf-8"></script>
+ 
+ <script src="{{url_for('static', filename='assets/vendors/jquery/jquery-3.4.1.js')}}"></script>
+ 
+ <script src="{{url_for('static', filename='script/slide.js')}}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+  
+var btn5 = document.getElementById("btn5");
+ 
+btn5.addEventListener("click", function() {
+  const typed = new Typed('#teks', {
+    strings: [`QnA ini di kirim secara anonymous,sehingga penerima tidak akan tahu dari siapa pesan ini di kirim🤫`],
+    typeSpeed: 50,
+    smartBackspace: true,
+    showCursor: false,
+  autoInsertCss: true,
+  });
+
+  var time = 5000;
+   setTimeout(function() {
+  document.getElementById("hide3").style.display = "block";
+}, time);
+      
+      });
+
+      
+</script>
+  </body>
+</html>
