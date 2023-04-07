@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulir Input</title>
+	    <meta charset='UTF-8'/>
+<meta content='width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5' name='viewport'/>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+    <title></title>
+<!-- Include the Borderless theme -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css')}}" type="text/css" media="all" />
+</head>
+<body>
+
+
+	<!-- load SweetAlert2 JS -->
+
+<script src="{{ url_for('static', filename='script/sweetalert2.min.js') }}"></script>
+<script src="{{ url_for('static', filename='script/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='script/anime.min.js') }}"></script>
+<script src="{{ url_for('static', filename='script/typed.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='script/jquery-3.6.3.min.js')}}"></script>
+
+
+	<script>
+	Swal.fire({
+	  imageUrl: "../static/source/mimibubu.gif",
+  imageWidth: 150,
+  imageHeight: 150,
+  backdrop: 'static',
+	  html :`
+	  <span id="text1" class="letters letters-left" style="font-family: poppins; font-size:20px;"></span>`,
+	  showClass: {
+    popup: 'animate__animated animate__swing'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutUp'
+  }
+	      
+	}).then((result) =>{
+	  if (result.isConfirmed){
+	    mulai();
+	  }
+	})
+	  
+		 function mulai(){
+			Swal.fire({
+			  backdrop: 'static',
+			  title: 'Your Username',
+			  input: 'text',
+			  inputPlaceholder: 'Masukkan username Anda',
+			  showCancelButton: true,
+			  cancelButtonText: 'Batal',
+			  confirmButtonText: 'Simpan',
+			  showClass: {
+			    popup: 'animate__animated animate__fadeInLeft'
+			  },
+			  hideClass: {
+			    popup: 'animate__animated animate__fadeOutUp'
+			  }
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    const nama = result.value;
+			    Swal.fire({
+			      backdrop: 'static',
+			      title: 'WhatsApp number',
+			      input: 'text',
+			      inputPlaceholder: 'Masukkan Nomor WA Anda',
+			      showCancelButton: true,
+			      cancelButtonText: 'Batal',
+			      confirmButtonText: 'Simpan',
+			      showClass: {
+			    popup: 'animate__animated animate__fadeInDown'
+			  },
+			  hideClass: {
+			    popup: 'animate__animated animate__fadeOutRight'
+			  }
+			    }).then((result) => {
+			      if (result.isConfirmed) {
+			        const wa = result.value;
+			        // kirim data ke server menggunakan jQuery AJAX
+			        $.post('/input2', {'nama': nama, 'wa': wa}, function(response){
+			        	if (response.redirect) {
+			        		window.location.href = response.redirect;
+			        	} else {
+			        	  Swal.fire({
+			        	    icon: 'error',
+			        	    title: 'Oops...',
+			        	    html: `<p id="text2">${response.message}</p>`,
+			        	    showClass: {
+			        	      popup: 'animate__animated animate__heartBeat'
+			        	    },
+			        	    backdrop: 'static',
+			        	    showConfirmButton: false
+			});setTimeout(function() {
+  mulai();
+}, 3500);
+			        	//	alert(response.message);
+			        	}
+			        });
+			      }
+			    });
+			  }
+			});
+		}
+		
+		var typed = new Typed('#text1', {
+      strings: ['masukan Username dan nomer WhatsApp anda '],
+      smartBackspace: true,
+showCursor: false,
+      typeSpeed: 50,
+    });
+
+	</script>
+</body>
+</html>

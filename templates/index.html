@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5' name='viewport'/>
+  <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+  <title></title>
+  <!-- Include the Borderless theme -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}" type="text/css" media="all" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}" type="text/css" media="all" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" media="all" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.css') }}" type="text/css" media="all" />
+  <style type="text/css" media="all">
+    body{
+      background-image: url("../static/source/IMG-20211212-081951-825.jpg");
+      background-repeat: no-repeat;
+      background-size:100%;
+      animation:none;
+      margin-bottom: -10px;
+      background-position: 0 -10px;
+      transition:all .3s ease;
+      overflow: hidden; /* Added overflow property to prevent background from scrolling */
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+<body>
+ <h1 class="ml11">
+     <span class="text-wrapper">
+    <span class="letters">Hello {{nama}}</span>
+  </span>
+  </h1>
+
+  <p class="ml9">
+  <span class="text-wrapper">
+    <span class="letters"> Share To Reply Question In Your WhatsApp Status</span>
+
+  </span>
+</p>
+  <div class="table-container">
+          <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    <table>
+      
+      <tr>
+        {% for filename in database %}
+        <td>
+<!-- icon baru/belum di buka -->
+          <img src="{{url_for('static', filename='source/baru.gif') }}" 
+               onclick="getFileContent('{{ filename }}', this)" 
+               style="cursor: pointer;" class="icons">
+        </td>
+        {% if loop.index % 3 == 0 %}
+      </tr>
+      <tr>
+        {% endif %}
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+  <script src="{{url_for('static', filename='script/sweatallert.js')}}"></script>
+  <script src="{{url_for('static', filename='script/anime.min.js')}}"></script>
+  <script src="{{url_for('static', filename='script/script.js')}}"></script>
+  <script>
+    function getFileContent(filename, image) {
+      image.src = "{{url_for('static', filename='source/loadingMembuka.gif')}}";
+      setTimeout(function() {
+        fetch('/get_file/' + filename)
+          .then(response => response.json())
+          .then(data => {
+            Swal.fire({
+              title:'someone said:',
+              html: `<p style='font-weight: 500;
+  font-size: 1em; margin-bottom:-5px;'>${data.content}</p>`,
+  showCancelButton: true,
+              confirmButtonText: 'read',
+confirmButtonColor: '#3085d6',
+			      cancelButtonText: 'reply'
+			      
+            }).then((result) =>{
+              if (result.isConfirmed){
+                image.src = "{{url_for('static', filename='source/sudahDibuka.gif')}}";
+              }
+             else{
+               image.src = "{{url_for('static', filename='source/sudahDibuka.gif')}}";
+               Swal.fire({
+              title:'Masukan Balasan Question Dan kirim',
+              input:'text',
+              confirmButtonText: 'send',
+              footer: '<button id="footerBtn" style="font-size:13px; background-color:red;color: white;border: none;border-radius: 5px;">Click Jika Eror</button><br><h5 id="footerText" style="text-align:center;"></h5>'
+            }).then((result) =>{
+               var text =`for question in _Sans-QnA_%0ASomeone Said:%0A" *_${data.content}_* "%0A%0AMy Answer:%0A' *_${result.value}_* '`
+               window.location.href = `https://wa.me/status/?text=${text}`;
+            })
+            
+            document.getElementById('footerBtn').addEventListener('click', function() {
+                var footerText = document.getElementById('footerText');
+                if (footerText.innerHTML === '') {
+                    footerText.innerHTML = 'Jika terdapat eror<br>"tidak dapat membuka tautan"<br>berarti WhatsApp kamu belum di Update,kamu Bisa dengan MengScreenshot Question dan memposting nya di status secara manual<br>(mandiri dikit ajig)';
+                } else {
+                    footerText.innerHTML = '';
+                }
+            });
+            
+             }
+            })
+          })
+          .catch(error => console.error(error))
+      }, 1100);
+    }
+  </script>
+</body>
+</html>
